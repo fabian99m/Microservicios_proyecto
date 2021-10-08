@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: servicio-foto
+  cloud:
+    config:
+      uri: http://localhost:8090
+      username: root
+      password: adm1n
+
+

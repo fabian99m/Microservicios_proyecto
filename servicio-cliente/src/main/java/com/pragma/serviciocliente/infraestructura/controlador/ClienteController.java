@@ -42,7 +42,6 @@ public class ClienteController {
         return  new ResponseEntity<>(clientes, HttpStatus.FOUND);
     }
 
-
     @GetMapping("/filtrar/id")
     public ResponseEntity<Cliente> filtroId(@RequestParam(name = "tipoId") String tipoId, @RequestParam(name = "numeroId") String numeroId){
         var a= clienteServicio.findByTipoIdAndNumeroId(tipoId,numeroId);
