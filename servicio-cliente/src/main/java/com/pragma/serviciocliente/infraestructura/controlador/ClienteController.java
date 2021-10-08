@@ -18,7 +18,8 @@ public class ClienteController {
 
     @PostMapping
     public ResponseEntity<String> guardarCliente(@RequestBody Cliente cliente){
-        if(clienteServicio.isUniqueId(cliente.getTipoId(),cliente.getNumeroId())){
+        System.out.println(cliente);
+        if(!clienteServicio.isUniqueId(cliente.getTipoId(),cliente.getNumeroId())){
             clienteServicio.guadarCliente(cliente);
             return new ResponseEntity<>(HttpStatus.CREATED);
         }  else {

@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: servicio-cliente
+  cloud:
+    config:
+      uri: http://localhost:8090
+      username: root
+      password: adm1n

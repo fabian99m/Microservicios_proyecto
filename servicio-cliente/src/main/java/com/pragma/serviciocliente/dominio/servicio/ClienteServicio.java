@@ -39,8 +39,7 @@ public class ClienteServicio {
 
     public Boolean isUniqueId(String tipoId, String numeroId){
         Optional<Cliente> optionalCliente = clienteRespositorio.findByTipoIdAndNumeroId(tipoId,numeroId);
-        Cliente cliente = optionalCliente.orElse(Cliente.builder().build());
-        return cliente.getNumeroId().isEmpty();
+        return optionalCliente.isPresent();
     }
 
     public Cliente findByTipoIdAndNumeroId(String tipoId, String numeroId) {
