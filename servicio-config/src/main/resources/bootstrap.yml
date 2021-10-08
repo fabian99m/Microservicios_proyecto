@@ -8,8 +8,8 @@ spring:
         git:
           uri: https://github.com/fabian99m/Microservicios_proyecto.git
           searchPatchs: config-data
-          username: fabian99m
-          password: 23053799fa
+          username: ${GIT_USER}
+          password: ${GIT_PASSWORD}
   security:
     user:
       name: root
