@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 public class Foto {
 
     private String foto;
-    private Long IdCliente;
+    private String IdCliente;
 }

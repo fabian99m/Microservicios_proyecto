@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Transient;
+
 @Data
 @AllArgsConstructor @NoArgsConstructor @Builder
 public class Cliente {
@@ -15,6 +17,8 @@ public class Cliente {
     private String numeroId;
     private int edad;
     private String ciudadNacimiento;
+
+    @Transient
     private String foto;
 
     /*public enum TipoId {

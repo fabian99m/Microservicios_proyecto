@@ -2,6 +2,7 @@ package com.pragma.serviciocliente.infraestructura.controlador;
 
 import com.pragma.serviciocliente.dominio.Cliente;
 import com.pragma.serviciocliente.dominio.servicio.ClienteServicio;
+import com.pragma.serviciocliente.dominio.servicio.ClienteServicioUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +17,13 @@ public class ClienteController {
     @Autowired
     private ClienteServicio clienteServicio;
 
+    @Autowired
+    protected ClienteServicioUtils clienteServicioUtils;
+
     @PostMapping
     public ResponseEntity<String> guardarCliente(@RequestBody Cliente cliente){
         System.out.println(cliente);
-        if(!clienteServicio.isUniqueId(cliente.getTipoId(),cliente.getNumeroId())){
+        if(!clienteServicioUtils.isUniqueId(cliente.getTipoId(),cliente.getNumeroId())){
             clienteServicio.guadarCliente(cliente);
             return new ResponseEntity<>(HttpStatus.CREATED);
         }  else {
