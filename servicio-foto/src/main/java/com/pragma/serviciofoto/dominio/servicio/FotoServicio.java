@@ -15,7 +15,12 @@ public class FotoServicio {
         fotoRepositorio.guardarFoto(foto);
     }
 
-    public Foto obternerFotoPorIdCliente(String id){
-        return fotoRepositorio.findByIdCliente(id).orElse(null);
+    public void EliminarFotoByIdCliente(Long idClient){
+        fotoRepositorio.deleteFotoByIdCliente(idClient);
     }
+
+    public Foto obternerFotoPorIdCliente(Long idClient){
+        return fotoRepositorio.findByIdCliente(idClient).orElse(null);
+    }
+
 }

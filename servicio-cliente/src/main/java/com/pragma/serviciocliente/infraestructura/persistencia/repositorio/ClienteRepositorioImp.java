@@ -22,9 +22,9 @@ public class ClienteRepositorioImp implements ClienteRespositorioInterfaz {
     ClienteMapper clienteMapper;
 
     @Override
-    public void guardarCliente(Cliente cliente) {
+    public ClienteEntidad guardarCliente(Cliente cliente) {
         ClienteEntidad clienteEntidad = clienteMapper.toClienteEntidad(cliente);
-        clienteDao.save(clienteEntidad);
+        return clienteDao.save(clienteEntidad);
     }
 
     @Override
@@ -58,5 +58,8 @@ public class ClienteRepositorioImp implements ClienteRespositorioInterfaz {
 
     }
 
+    public Optional<Long> getIdCliente(String tipoId, String numeroId){
+       return clienteDao.findByTipoIdAndNumeroId(tipoId, numeroId).map(ClienteEntidad::getId);
+    }
 
 }

@@ -25,12 +25,12 @@ public class FotoRepositorioImp implements FotoRespositorioInterfaz {
     }
 
     @Override
-    public void deleteFotoByIdCliente(String id) {
+    public void deleteFotoByIdCliente(Long id) {
         fotoDao.deleteFotoByIdCliente(id);
     }
 
     @Override
-    public Optional<Foto> findByIdCliente(String id) {
+    public Optional<Foto> findByIdCliente(Long id) {
         return fotoDao.findByIdCliente(id).map(fotoEntidad-> fotoMapper.toFoto(fotoEntidad));
     }
 }

@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface ClienteRespositorioInterfaz {
 
-    void guardarCliente(Cliente cliente);
+    ClienteEntidad guardarCliente(Cliente cliente);
 
     void eliminarCliente(Cliente cliente);
 
@@ -20,4 +20,5 @@ public interface ClienteRespositorioInterfaz {
 
     Optional<Cliente> findByTipoIdAndNumeroId(String tipoId, String numeroId);
 
+    public Optional<Long> getIdCliente(String tipoId, String numeroId);
 }

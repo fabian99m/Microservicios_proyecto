@@ -10,5 +10,5 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class FotoEntidad {
 
     private String foto;
-    private String idCliente;
+    private Long idCliente;
 }

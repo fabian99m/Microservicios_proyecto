@@ -42,6 +42,9 @@ dependencies {
 	compileOnly 'org.mapstruct:mapstruct:1.4.2.Final'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
 
+	implementation 'org.apache.commons:commons-lang3:3.12.0'
+
+
 	implementation 'mysql:mysql-connector-java:8.0.22'
 }
 dependencyManagement {

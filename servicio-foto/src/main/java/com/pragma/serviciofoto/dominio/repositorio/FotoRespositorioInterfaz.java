@@ -9,8 +9,8 @@ public interface FotoRespositorioInterfaz {
 
     void guardarFoto(Foto foto);
 
-    void deleteFotoByIdCliente(String id);
+    void deleteFotoByIdCliente(Long id);
 
-     Optional<Foto> findByIdCliente(String id);
+     Optional<Foto> findByIdCliente(Long id);
 
 }

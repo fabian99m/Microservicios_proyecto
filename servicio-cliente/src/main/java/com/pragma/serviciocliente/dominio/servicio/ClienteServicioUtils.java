@@ -19,18 +19,24 @@ public class ClienteServicioUtils {
 
     @Autowired
     FotoRest fotoRest;
-    public Boolean isUniqueId(String tipoId, String numeroId){
+
+    public Boolean existId(String tipoId, String numeroId){
         Optional<Cliente> optionalCliente = clienteRespositorio.findByTipoIdAndNumeroId(tipoId,numeroId);
         return optionalCliente.isPresent();
     }
 
     public Foto getFoto(Cliente cliente) {
-        Foto foto = null;
-        ResponseEntity<Foto> responseEntityFoto = fotoRest.obternerFotoPorIdCliente(cliente.getNumeroId());
+        Long idClient= this.getIdClienteEntidad(cliente.getTipoId(),cliente.getNumeroId());
+        Foto foto = Foto.builder().build();
+        ResponseEntity<Foto> responseEntityFoto = fotoRest.obternerFotoPorIdCliente(idClient);
         if(responseEntityFoto.getStatusCode() == HttpStatus.OK){
             foto = (Foto) responseEntityFoto.getBody();
         }
         return foto;
     }
 
+    public Long getIdClienteEntidad(String tipoId,String numeroId){
+        Optional<Long> idOptional =clienteRespositorio.getIdCliente(tipoId, numeroId);
+        return idOptional.orElse(-1L);
+    }
 }

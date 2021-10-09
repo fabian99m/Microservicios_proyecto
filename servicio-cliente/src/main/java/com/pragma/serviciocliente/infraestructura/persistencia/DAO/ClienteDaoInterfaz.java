@@ -11,4 +11,6 @@ public interface ClienteDaoInterfaz extends CrudRepository<ClienteEntidad,Long> 
     Optional<List<ClienteEntidad>> findByEdadGreaterThanEqual(Integer edad);
 
     Optional<ClienteEntidad> findByTipoIdAndNumeroId(String tipoId, String numeroId);
+
+    //Optional<ClienteEntidad> findByTipoIdAndNumeroId(String tipoId, String numeroId);
 }

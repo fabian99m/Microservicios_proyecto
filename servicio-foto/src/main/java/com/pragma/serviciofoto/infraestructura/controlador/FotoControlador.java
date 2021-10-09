@@ -22,12 +22,20 @@ public class FotoControlador {
     }
 
     @GetMapping("/{IdCliente}")
-    public ResponseEntity<Foto> obternerFotoPorIdCliente(@PathVariable String IdCliente) {
+    public ResponseEntity<Foto> obternerFotoPorIdCliente(@PathVariable Long IdCliente) {
         Foto foto = fotoServicio.obternerFotoPorIdCliente(IdCliente);
         if(foto == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(foto,HttpStatus.OK);
     }
+
+    @DeleteMapping("/{IdClient}")
+    public ResponseEntity<Foto>  EliminarFotoByIdCliente(@PathVariable Long IdClient){
+        fotoServicio.EliminarFotoByIdCliente(IdClient);
+        return new ResponseEntity<>(HttpStatus.OK);
+
+    }
+
 
 }

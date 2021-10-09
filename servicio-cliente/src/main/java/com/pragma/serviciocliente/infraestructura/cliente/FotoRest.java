@@ -13,5 +13,8 @@ public interface FotoRest {
     public ResponseEntity<Foto> guardarFoto(@RequestBody Foto foto);
 
     @GetMapping("/{IdCliente}")
-    public ResponseEntity<Foto> obternerFotoPorIdCliente(@PathVariable String IdCliente);
+    public ResponseEntity<Foto> obternerFotoPorIdCliente(@PathVariable Long IdCliente);
+
+    @DeleteMapping("/{IdClient}")
+    public ResponseEntity<Foto>  EliminarFotoByIdCliente(@PathVariable Long IdClient);
 }

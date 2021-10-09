@@ -4,9 +4,9 @@ import com.pragma.serviciocliente.dominio.Cliente;
 import com.pragma.serviciocliente.dominio.Foto;
 import com.pragma.serviciocliente.dominio.repositorio.ClienteRespositorioInterfaz;
 import com.pragma.serviciocliente.infraestructura.cliente.FotoRest;
+import com.pragma.serviciocliente.infraestructura.persistencia.entidad.ClienteEntidad;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -27,48 +27,57 @@ public class ClienteServicio {
     @Autowired
     FotoRest fotoRest;
 
-    public void guadarCliente(Cliente cliente){
-        clienteRespositorio.guardarCliente(cliente);
+    public void guadarCliente(Cliente cliente) {
+       ClienteEntidad clienteBd =clienteRespositorio.guardarCliente(cliente);
         fotoRest.guardarFoto(Foto.builder()
                 .foto(cliente.getFoto())
-                .IdCliente(cliente.getNumeroId()).build());
+                .IdCliente(clienteBd.getId()).build());
     }
 
-    public List<Cliente> listarClientes(){
-         List<Cliente> clientes = clienteRespositorio.listarClientes();
-         return clientes.stream().map(cliente -> {
-             Foto foto = clienteServicioUtils.getFoto(cliente);
-             if(foto != null){
-                 cliente.setFoto(foto.getFoto());
-             }
-             return  cliente;
-            }).collect(Collectors.toList());
+    public List<Cliente> listarClientes() {
+        List<Cliente> clientesBd = clienteRespositorio.listarClientes();
+        return clientesBd.stream().map(clienteBd -> {
+            Foto foto = clienteServicioUtils.getFoto(clienteBd);
+            if (foto != null) {
+                clienteBd.setFoto(foto.getFoto());
+            }
+            return clienteBd;
+        }).collect(Collectors.toList());
     }
 
-    public void eliminarCliente(Cliente cliente){
+    public void eliminarCliente(Cliente cliente) {
+        Long idClient= clienteServicioUtils.getIdClienteEntidad(cliente.getTipoId(),cliente.getNumeroId());
         clienteRespositorio.eliminarCliente(cliente);
+        fotoRest.EliminarFotoByIdCliente(idClient);
+
     }
 
     //public void actualizarCliente(Cliente cliente){
-   ////    // clienteRespositorio
-   // }
+    ////    // clienteRespositorio
+    // }
 
     public List<Cliente> findByEdadGreaterThanEqual(int edad) {
         Optional<List<Cliente>> optionalList = clienteRespositorio.findByEdadGreaterThanEqual(edad);
-        return optionalList.orElse(Collections.emptyList());
+        List<Cliente> clientesBd = optionalList.orElse(Collections.emptyList());
+        if (clientesBd.isEmpty()) {
+            return Collections.emptyList();
+        }
+        return clientesBd.stream().map(clienteBd -> {
+            Foto foto = clienteServicioUtils.getFoto(clienteBd);
+            if (foto != null) {
+                clienteBd.setFoto(foto.getFoto());
+            }
+            return clienteBd;
+        }).collect(Collectors.toList());
     }
-
 
     public Cliente findByTipoIdAndNumeroId(String tipoId, String numeroId) {
-        Optional<Cliente> optionalCliente = clienteRespositorio.findByTipoIdAndNumeroId(tipoId,numeroId);
-        return optionalCliente.orElse(Cliente.builder().build());
+        Optional<Cliente> optionalCliente = clienteRespositorio.findByTipoIdAndNumeroId(tipoId, numeroId);
+        Cliente clienteBd = optionalCliente.orElse(null);
+        if (clienteBd == null) {
+            return null;
+        }
+        clienteBd.setFoto(clienteServicioUtils.getFoto(clienteBd).getFoto());
+        return clienteBd;
     }
-
-
-    public Boolean isUniqueId(String tipoId, String numeroId){
-        Optional<Cliente> optionalCliente = clienteRespositorio.findByTipoIdAndNumeroId(tipoId,numeroId);
-        return optionalCliente.isPresent();
-    }
-
-
 }
