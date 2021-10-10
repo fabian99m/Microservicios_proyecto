@@ -14,6 +14,8 @@ spring:
       ddl-auto: update
 
 eureka:
+  instance:
+    hostname: localhost
   client:
     serviceUrl:
       defaultZone: http://localhost:8099/eureka/
