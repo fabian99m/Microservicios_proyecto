@@ -7,7 +7,7 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8099/eureka/
-    register-with-eureka: false
+    registerWithEureka: false
 
 
 #spring.cloud.discovery.enabled=true
