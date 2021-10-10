@@ -85,6 +85,7 @@ public class ClienteController {
         return new ResponseEntity<>(ResponseMessage.builder().code("400").response("Edad no válida.").build(), HttpStatus.BAD_REQUEST);
     }
 
+
     @GetMapping("/id/{tipoId}/{numeroId}")
     public ResponseEntity<Cliente> filtroId(@PathVariable String tipoId, @PathVariable String numeroId) {
         Cliente cliente = clienteServicio.findByTipoIdAndNumeroId(tipoId, numeroId);

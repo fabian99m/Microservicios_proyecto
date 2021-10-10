@@ -17,3 +17,12 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8099/eureka/
+
+feign:
+  hystrix:
+    anable: true
+managemanet:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
