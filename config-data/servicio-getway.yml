@@ -8,8 +8,12 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8099/eureka/
 
+
+#spring.cloud.discovery.enabled=true
 spring:
   cloud:
+    discovery:
+      enabled: true
     geteway:
       discovery:
         locator:
