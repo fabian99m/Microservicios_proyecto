@@ -23,10 +23,10 @@ spring:
           lower-case-service-id: true
       routes:
         - id: servicio-cliente
-          uri: lb://servicio-cliente
+          uri: http://localhost:8091/
           predicates:
             - Path=/cliente/**
         - id: servicio-foto
-          uri: http://localhost:8092
+          uri: http://localhost:8092/
           predicates:
             - Path=/foto/**
