@@ -20,7 +20,7 @@ eureka:
 
 feign:
   hystrix:
-    enable: true
+    enabled: true
 management:
   endpoints:
     web:
