@@ -20,6 +20,7 @@ spring:
       discovery:
         locator:
           enabled: true
+          lower-case-service-id: true
       routes:
         - id: servicio-cliente
           uri: lb://servicio-cliente
