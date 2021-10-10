@@ -7,16 +7,13 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8099/eureka/
-    registerWithEureka: false
 
 
 #spring.cloud.discovery.enabled=true
 #eureka.client.register-with-eureka=false
 spring:
   cloud:
-    discovery:
-      enabled: true
-    geteway:
+    gateway:
       discovery:
         locator:
           enabled: true
@@ -29,3 +26,4 @@ spring:
           uri: http://localhost:8092/
           predicates:
             - Path=/foto/**
+
