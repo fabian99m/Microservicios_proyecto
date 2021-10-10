@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
-
 @Repository
 public class ClienteRepositorioImp implements ClienteRespositorioInterfaz {
 
@@ -28,13 +27,15 @@ public class ClienteRepositorioImp implements ClienteRespositorioInterfaz {
     }
 
     @Override
-    public void eliminarCliente(Cliente cliente) {
-        ClienteEntidad clienteEntidad = clienteMapper.toClienteEntidad(cliente);
-        clienteDao.delete(clienteEntidad);
+    public void eliminarCliente(Long IdCliente) {
+        clienteDao.deleteById(IdCliente);
     }
 
     @Override
-    public void ActulizarCliente(Cliente cliente) {
+    public void actulizarCliente(Cliente cliente,Long IdClienteEntidad) {
+        ClienteEntidad clienteEntidad = clienteMapper.toClienteEntidad(cliente);
+        clienteEntidad.setId(IdClienteEntidad);
+        clienteDao.save(clienteEntidad);
        // ClienteEntidad clienteEntidad = clienteMapper.toClienteEntidad(cliente);
         //clienteDao.   (clienteEntidad);
     }

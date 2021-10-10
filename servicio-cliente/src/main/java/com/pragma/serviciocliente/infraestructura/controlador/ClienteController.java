@@ -26,17 +26,44 @@ public class ClienteController {
     protected ClienteServicioUtils clienteServicioUtils;
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> guardarCliente(Cliente cliente, @RequestParam("fotoFile") MultipartFile file)  {
+    public ResponseEntity<?> guardarCliente(Cliente cliente, @RequestParam("fotoFile") MultipartFile fotoFile)  {
         try {
-            String fotoBase64 = Base64.getEncoder().encodeToString(file.getBytes());
+            String fotoBase64 = Base64.getEncoder().encodeToString(fotoFile.getBytes());
             cliente.setFoto(fotoBase64);
-        } catch (IOException e) {cliente.setFoto("");}
+        } catch (IOException e) {cliente.setFoto("Foto no disponible.");}
 
         if (clienteServicioUtils.existId(cliente.getTipoId(), cliente.getNumeroId())) {
             return new ResponseEntity<>(ResponseMessage.builder().code("400").response("Cliente ya registrado.").build(), HttpStatus.BAD_REQUEST);
         }
         clienteServicio.guadarCliente(cliente);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+
+    @DeleteMapping("/id/{tipoId}/{numeroId}")
+    public ResponseEntity<?> eliminarCliente(@PathVariable String tipoId, @PathVariable String numeroId){
+        Cliente clienteBd= clienteServicio.findByTipoIdAndNumeroId(tipoId, numeroId);
+        if(clienteBd != null) {
+            clienteServicio.eliminarCliente(clienteBd);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(ResponseMessage.builder().code("404").response("Cliente no encontrado.").build(), HttpStatus.NOT_FOUND);
+    }
+
+
+    @PutMapping("/id/{tipoId}/{numeroId}")
+    public ResponseEntity<?> actualizarCliente(@PathVariable String tipoId,  @PathVariable String numeroId,
+                                               @ModelAttribute Cliente cliente, @RequestParam("fotoFile") MultipartFile fotoFile){
+        Cliente clienteBd = clienteServicio.findByTipoIdAndNumeroId(tipoId, numeroId);
+        if(clienteBd != null) {
+            try {
+                String fotoBase64 = Base64.getEncoder().encodeToString(fotoFile.getBytes());
+                cliente.setFoto(fotoBase64);
+            } catch (IOException e) {cliente.setFoto("Foto no disponible.");}
+            clienteServicio.actualizarCliente(cliente);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(ResponseMessage.builder().code("404").response("Cliente no encontrado.").build(), HttpStatus.NOT_FOUND);
     }
 
     @GetMapping
@@ -46,7 +73,7 @@ public class ClienteController {
     }
 
     @GetMapping("/edad/{edadString}")
-    public ResponseEntity<List<Cliente>> filtroEdad(@PathVariable String edadString) {
+    public ResponseEntity<?> filtroEdad(@PathVariable String edadString) {
         if(NumberUtils.isDigits(edadString)){
            int edad = Integer.parseInt(edadString);
             List<Cliente> clientes = clienteServicio.findByEdadGreaterThanEqual(edad);
@@ -55,7 +82,7 @@ public class ClienteController {
             }
             return new ResponseEntity<>(clientes, HttpStatus.FOUND);
         }
-        return new ResponseEntity("Edad no válida.",HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(ResponseMessage.builder().code("400").response("Edad no válida.").build(), HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("/id/{tipoId}/{numeroId}")

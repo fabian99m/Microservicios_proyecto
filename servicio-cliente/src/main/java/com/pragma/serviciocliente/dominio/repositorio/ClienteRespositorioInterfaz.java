@@ -10,9 +10,9 @@ public interface ClienteRespositorioInterfaz {
 
     ClienteEntidad guardarCliente(Cliente cliente);
 
-    void eliminarCliente(Cliente cliente);
+    void eliminarCliente(Long IdCliente);
 
-    void ActulizarCliente(Cliente cliente);
+    void actulizarCliente(Cliente cliente, Long IdClienteEntidad);
 
     List<Cliente> listarClientes();
 
@@ -20,5 +20,5 @@ public interface ClienteRespositorioInterfaz {
 
     Optional<Cliente> findByTipoIdAndNumeroId(String tipoId, String numeroId);
 
-    public Optional<Long> getIdCliente(String tipoId, String numeroId);
+     Optional<Long> getIdCliente(String tipoId, String numeroId);
 }
