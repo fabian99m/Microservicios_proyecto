@@ -19,7 +19,7 @@ eureka:
       defaultZone: http://localhost:8099/eureka/
 
 feign:
-  hystrix:
+  circuitbreaker:
     enabled: true
 management:
   endpoints:
