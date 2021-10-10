@@ -1,4 +1,4 @@
-package com.pragma.serviciocliente.infraestructura.cliente;
+package com.pragma.serviciocliente.infraestructura.clientefeign;
 
 import com.pragma.serviciocliente.dominio.Foto;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -15,6 +15,6 @@ public interface FotoRest {
     @GetMapping("/foto/{IdCliente}")
     public ResponseEntity<Foto> obternerFotoPorIdCliente(@PathVariable Long IdCliente);
 
-    @DeleteMapping("/foto/{IdClient}")
+    @DeleteMapping("/foto/{IdCliente}")
     public ResponseEntity<Foto> EliminarFotoByIdCliente(@PathVariable Long IdCliente);
 }

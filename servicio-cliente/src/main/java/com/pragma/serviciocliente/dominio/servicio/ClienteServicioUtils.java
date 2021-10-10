@@ -3,7 +3,7 @@ package com.pragma.serviciocliente.dominio.servicio;
 import com.pragma.serviciocliente.dominio.Cliente;
 import com.pragma.serviciocliente.dominio.Foto;
 import com.pragma.serviciocliente.dominio.repositorio.ClienteRespositorioInterfaz;
-import com.pragma.serviciocliente.infraestructura.cliente.FotoRest;
+import com.pragma.serviciocliente.infraestructura.clientefeign.FotoRest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

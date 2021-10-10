@@ -30,9 +30,9 @@ public class FotoControlador {
         return new ResponseEntity<>(foto,HttpStatus.OK);
     }
 
-    @DeleteMapping("/{IdClient}")
-    public ResponseEntity<Foto>  EliminarFotoByIdCliente(@PathVariable Long IdClient){
-        fotoServicio.EliminarFotoByIdCliente(IdClient);
+    @DeleteMapping("/{IdCliente}")
+    public ResponseEntity<Foto>  EliminarFotoByIdCliente(@PathVariable Long IdCliente){
+        fotoServicio.EliminarFotoByIdCliente(IdCliente);
         return new ResponseEntity<>(HttpStatus.OK);
 
     }

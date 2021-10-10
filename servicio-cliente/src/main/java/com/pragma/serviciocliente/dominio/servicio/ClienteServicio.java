@@ -3,7 +3,7 @@ package com.pragma.serviciocliente.dominio.servicio;
 import com.pragma.serviciocliente.dominio.Cliente;
 import com.pragma.serviciocliente.dominio.Foto;
 import com.pragma.serviciocliente.dominio.repositorio.ClienteRespositorioInterfaz;
-import com.pragma.serviciocliente.infraestructura.cliente.FotoRest;
+import com.pragma.serviciocliente.infraestructura.clientefeign.FotoRest;
 import com.pragma.serviciocliente.infraestructura.persistencia.entidad.ClienteEntidad;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -47,7 +47,7 @@ public class ClienteServicio {
 
     public void eliminarCliente(Cliente cliente) {
         Long idClient = clienteServicioUtils.getIdClienteEntidad(cliente.getTipoId(), cliente.getNumeroId());
-        System.out.println("id cliente: "+idClient);
+        //System.out.println("id cliente: "+idClient);
         clienteRespositorio.eliminarCliente(idClient);
         fotoRest.EliminarFotoByIdCliente(idClient);
     }

@@ -1,4 +1,4 @@
-package com.pragma.serviciocliente.infraestructura.cliente;
+package com.pragma.serviciocliente.infraestructura.clientefeign;
 
 import com.pragma.serviciocliente.dominio.Foto;
 import org.springframework.http.HttpStatus;
