@@ -25,7 +25,7 @@ spring:
           uri: http://localhost:8091/
           predicates:
             - Path=/cliente/**
-        - id: FOTO
+        - id: servicio-foto
           uri: http://localhost:8092/
           predicates:
             - Path=/foto/**

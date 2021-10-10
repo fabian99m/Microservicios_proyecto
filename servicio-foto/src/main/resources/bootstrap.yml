@@ -1,6 +1,6 @@
 spring:
   application:
-    name: FOTO
+    name: servicio-foto
   cloud:
     config:
       uri: http://localhost:8090
