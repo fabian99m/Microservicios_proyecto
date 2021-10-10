@@ -33,6 +33,15 @@
       </GradleProjectSettings>
       <GradleProjectSettings>
         <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/servicio-getway" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/servicio-getway" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/servicio-registro" />
         <option name="modules">
           <set>

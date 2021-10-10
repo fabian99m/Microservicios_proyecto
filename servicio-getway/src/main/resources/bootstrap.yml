@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: servicio-getway
+  cloud:
+    config:
+      uri: http://localhost:8090
+      username: root
+      password: adm1n
+
