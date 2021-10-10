@@ -8,9 +8,6 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8099/eureka/
 
-
-#spring.cloud.discovery.enabled=true
-#eureka.client.register-with-eureka=false
 spring:
   cloud:
     gateway:
@@ -19,11 +16,10 @@ spring:
           enabled: true
       routes:
         - id: servicio-cliente
-          uri: http://localhost:8091/
+          uri: lb://servicio-cliente
           predicates:
             - Path=/cliente/**
         - id: servicio-foto
-          uri: http://localhost:8092/
+          uri: lb://servicio-foto
           predicates:
             - Path=/foto/**
-
