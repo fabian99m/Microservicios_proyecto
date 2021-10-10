@@ -47,6 +47,7 @@ public class ClienteServicio {
 
     public void eliminarCliente(Cliente cliente) {
         Long idClient = clienteServicioUtils.getIdClienteEntidad(cliente.getTipoId(), cliente.getNumeroId());
+        System.out.println("id cliente: "+idClient);
         clienteRespositorio.eliminarCliente(idClient);
         fotoRest.EliminarFotoByIdCliente(idClient);
     }
@@ -57,7 +58,6 @@ public class ClienteServicio {
         if(cliente.getFoto() != null) {
            // fotoRest.guardarFoto(Foto.builder().foto(cliente.getFoto()).IdCliente(idClient).build());
         }
-
      }
 
     public List<Cliente> findByEdadGreaterThanEqual(int edad) {
