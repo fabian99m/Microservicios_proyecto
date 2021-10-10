@@ -21,7 +21,7 @@ eureka:
 feign:
   hystrix:
     enable: true
-managemanet:
+management:
   endpoints:
     web:
       exposure:
