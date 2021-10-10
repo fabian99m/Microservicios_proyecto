@@ -20,13 +20,12 @@ spring:
       discovery:
         locator:
           enabled: true
-          lower-case-service-id: true
       routes:
         - id: servicio-cliente
           uri: http://localhost:8091/
           predicates:
             - Path=/cliente/**
-        - id: servicio-foto
+        - id: FOTO
           uri: http://localhost:8092/
           predicates:
             - Path=/foto/**
