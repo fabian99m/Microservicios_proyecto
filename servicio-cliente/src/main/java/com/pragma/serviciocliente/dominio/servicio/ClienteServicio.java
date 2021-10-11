@@ -23,9 +23,8 @@ public class ClienteServicio {
     @Autowired
     ClienteServicioUtils clienteServicioUtils;
 
-    // Cliente Feign para comunicación con servicio Foto
     @Autowired
-    FotoRest fotoRest;
+    FotoRest fotoRest; // cliente Feign
 
     public void guadarCliente(Cliente cliente) {
        ClienteEntidad clienteBd = clienteRespositorio.guardarCliente(cliente);
@@ -47,7 +46,6 @@ public class ClienteServicio {
 
     public void eliminarCliente(Cliente cliente) {
         Long idClient = clienteServicioUtils.getIdClienteEntidad(cliente.getTipoId(), cliente.getNumeroId());
-        //System.out.println("id cliente: "+idClient);
         clienteRespositorio.eliminarCliente(idClient);
         fotoRest.EliminarFotoByIdCliente(idClient);
     }

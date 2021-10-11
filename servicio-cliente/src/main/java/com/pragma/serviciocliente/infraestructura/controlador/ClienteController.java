@@ -17,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/cliente")
+@CrossOrigin(origins = "http://localhost:8080")
 public class ClienteController {
 
     @Autowired
@@ -26,7 +27,7 @@ public class ClienteController {
     protected ClienteServicioUtils clienteServicioUtils;
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> guardarCliente(Cliente cliente, @RequestParam("fotoFile") MultipartFile fotoFile)  {
+    public ResponseEntity<?> guardarCliente(Cliente cliente, @RequestParam("fotoFile") MultipartFile fotoFile) {
         try {
             String fotoBase64 = Base64.getEncoder().encodeToString(fotoFile.getBytes());
             cliente.setFoto(fotoBase64);
@@ -41,41 +42,46 @@ public class ClienteController {
 
 
     @DeleteMapping("/id/{tipoId}/{numeroId}")
-    public ResponseEntity<?> eliminarCliente(@PathVariable String tipoId, @PathVariable String numeroId){
-        Cliente clienteBd= clienteServicio.findByTipoIdAndNumeroId(tipoId, numeroId);
-        if(clienteBd != null) {
-            clienteServicio.eliminarCliente(clienteBd);
-            return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<?> eliminarCliente(@PathVariable String tipoId, @PathVariable String numeroId) {
+        Cliente clienteBd = clienteServicio.findByTipoIdAndNumeroId(tipoId, numeroId);
+        if (clienteBd == null) {
+            return new ResponseEntity<>(ResponseMessage.builder().code("404").response("Cliente no encontrado.").build(), HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(ResponseMessage.builder().code("404").response("Cliente no encontrado.").build(), HttpStatus.NOT_FOUND);
+        clienteServicio.eliminarCliente(clienteBd);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
     @PutMapping("/id/{tipoId}/{numeroId}")
-    public ResponseEntity<?> actualizarCliente(@PathVariable String tipoId,  @PathVariable String numeroId,
-                                               @ModelAttribute Cliente cliente, @RequestParam("fotoFile") MultipartFile fotoFile){
+    public ResponseEntity<?> actualizarCliente(@PathVariable String tipoId, @PathVariable String numeroId,
+                                               @ModelAttribute Cliente cliente, @RequestParam("fotoFile") MultipartFile fotoFile) {
         Cliente clienteBd = clienteServicio.findByTipoIdAndNumeroId(tipoId, numeroId);
-        if(clienteBd != null) {
+        if (clienteBd != null) {
             try {
                 String fotoBase64 = Base64.getEncoder().encodeToString(fotoFile.getBytes());
                 cliente.setFoto(fotoBase64);
-            } catch (IOException e) {cliente.setFoto("Foto no disponible.");}
+            } catch (IOException e) {
+                cliente.setFoto("Foto no disponible.");
+            }
             clienteServicio.actualizarCliente(cliente);
             return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(ResponseMessage.builder().code("404").response("Cliente no encontrado.").build(), HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Cliente>> listarCliente() {
         List<Cliente> clientes = clienteServicio.listarClientes();
-        return new ResponseEntity<>(clientes, HttpStatus.OK);
+        if(clientes.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(clientes, HttpStatus.FOUND);
     }
 
     @GetMapping("/edad/{edadString}")
     public ResponseEntity<?> filtroEdad(@PathVariable String edadString) {
-        if(NumberUtils.isDigits(edadString)){
-           int edad = Integer.parseInt(edadString);
+        if (NumberUtils.isDigits(edadString)) {
+            int edad = Integer.parseInt(edadString);
             List<Cliente> clientes = clienteServicio.findByEdadGreaterThanEqual(edad);
             if (clientes.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);

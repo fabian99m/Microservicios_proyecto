@@ -18,7 +18,7 @@ public class ClienteServicioUtils {
     private ClienteRespositorioInterfaz clienteRespositorio;
 
     @Autowired
-    FotoRest fotoRest;
+    FotoRest fotoRest; // cliente Feign
 
     public Boolean existId(String tipoId, String numeroId){
         Optional<Cliente> optionalCliente = clienteRespositorio.findByTipoIdAndNumeroId(tipoId,numeroId);
@@ -39,4 +39,5 @@ public class ClienteServicioUtils {
         Optional<Long> idOptional =clienteRespositorio.getIdCliente(tipoId, numeroId);
         return idOptional.orElse(-1L);
     }
+
 }
