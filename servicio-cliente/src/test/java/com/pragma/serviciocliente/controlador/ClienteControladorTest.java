@@ -39,7 +39,7 @@ public class ClienteControladorTest {
 
     @Test
     @Order(1)
-    void guardarClienteTest() throws Exception {
+    void guardarCliente() throws Exception {
         mvc.perform(multipart("/cliente")
                 .file("fotoFile", "foto".getBytes(StandardCharsets.UTF_8))
                 .param("clienteJson", objectMapper.writeValueAsString(cliente))

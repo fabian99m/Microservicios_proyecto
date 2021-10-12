@@ -30,11 +30,12 @@ public class ClienteServicioTest {
     @Autowired
     FotoRest fotoRest; // cliente Rest Feign
 
-    static Cliente cliente;
+    static Cliente cliente, clienteUpdate;
 
     @BeforeAll
     static void setUp() {
         cliente = FakerData.getCliente();
+        clienteUpdate = FakerData.getCliente();
     }
 
     @Test
@@ -52,7 +53,7 @@ public class ClienteServicioTest {
 
         // foto de cliente
         Foto foto = clienteServicioUtils.getFoto(cliente);
-        assertEquals(cliente.getFoto(),foto.getFoto());
+        assertEquals(cliente.getFoto(), foto.getFoto());
     }
 
     @Test
@@ -82,15 +83,27 @@ public class ClienteServicioTest {
 
     @Test
     @Order(5)
-    void eliminarCliente() {
-        assertNotNull(clienteServicio.findByTipoIdAndNumeroId(cliente.getTipoId(), cliente.getNumeroId()));
-        assertNotNull(clienteServicioUtils.getFoto(cliente));
-
-        clienteServicio.eliminarCliente(cliente);
-
-        assertNull(clienteServicio.findByTipoIdAndNumeroId(cliente.getTipoId(), cliente.getNumeroId()));
-        assertNull(clienteServicioUtils.getFoto(cliente));
+    void actualizarCliente() {
+        clienteServicio.actualizarCliente(cliente.getTipoId(), cliente.getNumeroId(), clienteUpdate);
+        Cliente clienteUpdated = clienteServicio.findByTipoIdAndNumeroId(clienteUpdate.getTipoId(), clienteUpdate.getNumeroId());
+        assertNotNull(clienteUpdated);
+        assertEquals(clienteUpdated, clienteUpdate);
 
     }
+
+    @Test
+    @Order(6)
+    void eliminarCliente() {
+
+        assertNotNull(clienteServicio.findByTipoIdAndNumeroId(clienteUpdate.getTipoId(), clienteUpdate.getNumeroId()));
+        assertNotNull(clienteServicioUtils.getFoto(clienteUpdate));
+
+        clienteServicio.eliminarCliente(clienteUpdate);
+
+        assertNull(clienteServicio.findByTipoIdAndNumeroId(clienteUpdate.getTipoId(), clienteUpdate.getNumeroId()));
+        assertNull(clienteServicioUtils.getFoto(clienteUpdate));
+
+    }
+
 
 }
