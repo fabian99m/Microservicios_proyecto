@@ -20,23 +20,23 @@ public class ClienteServicioUtils {
     @Autowired
     FotoRest fotoRest; // cliente Feign
 
-    public Boolean existId(String tipoId, String numeroId){
-        Optional<Cliente> optionalCliente = clienteRespositorio.findByTipoIdAndNumeroId(tipoId,numeroId);
+    public Boolean existId(String tipoId, String numeroId) {
+        Optional<Cliente> optionalCliente = clienteRespositorio.findByTipoIdAndNumeroId(tipoId, numeroId);
         return optionalCliente.isPresent();
     }
 
     public Foto getFoto(Cliente cliente) {
-        Long idClient= this.getIdClienteEntidad(cliente.getTipoId(),cliente.getNumeroId());
-        Foto foto = Foto.builder().build();
+        Long idClient = this.getIdClienteEntidad(cliente.getTipoId(), cliente.getNumeroId());
+        Foto foto =  null;
         ResponseEntity<Foto> responseEntityFoto = fotoRest.obternerFotoPorIdCliente(idClient);
-        if(responseEntityFoto.getStatusCode() == HttpStatus.OK){
+        if (responseEntityFoto.getStatusCode() == HttpStatus.OK && idClient != -1L) {
             foto = (Foto) responseEntityFoto.getBody();
         }
         return foto;
     }
 
-    public Long getIdClienteEntidad(String tipoId,String numeroId){
-        Optional<Long> idOptional =clienteRespositorio.getIdCliente(tipoId, numeroId);
+    public Long getIdClienteEntidad(String tipoId, String numeroId) {
+        Optional<Long> idOptional = clienteRespositorio.getIdCliente(tipoId, numeroId);
         return idOptional.orElse(-1L);
     }
 

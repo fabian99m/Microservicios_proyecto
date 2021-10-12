@@ -28,7 +28,7 @@ public class ClienteControladorTest {
     @Autowired
     ObjectMapper objectMapper;
 
-     static Cliente cliente;
+    static Cliente cliente;
 
 
     @BeforeAll

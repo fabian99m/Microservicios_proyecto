@@ -32,11 +32,11 @@ public class ClienteRepositorioImp implements ClienteRespositorioInterfaz {
     }
 
     @Override
-    public void actulizarCliente(Cliente cliente,Long IdClienteEntidad) {
+    public void actulizarCliente(Cliente cliente, Long IdClienteEntidad) {
         ClienteEntidad clienteEntidad = clienteMapper.toClienteEntidad(cliente);
         clienteEntidad.setId(IdClienteEntidad);
         clienteDao.save(clienteEntidad);
-       // ClienteEntidad clienteEntidad = clienteMapper.toClienteEntidad(cliente);
+        // ClienteEntidad clienteEntidad = clienteMapper.toClienteEntidad(cliente);
         //clienteDao.   (clienteEntidad);
     }
 
@@ -49,18 +49,18 @@ public class ClienteRepositorioImp implements ClienteRespositorioInterfaz {
     @Override
     public Optional<List<Cliente>> findByEdadGreaterThanEqual(Integer edad) {
         Optional<List<ClienteEntidad>> clienteEntidads = clienteDao.findByEdadGreaterThanEqual(edad);
-        return clienteEntidads.map( entidad -> clienteMapper.toListCliente(entidad));
+        return clienteEntidads.map(entidad -> clienteMapper.toListCliente(entidad));
     }
 
     @Override
     public Optional<Cliente> findByTipoIdAndNumeroId(String tipoId, String numeroId) {
-        Optional<ClienteEntidad> clienteEntidad = clienteDao.findByTipoIdAndNumeroId(tipoId,numeroId);
-        return clienteEntidad.map( entidad -> clienteMapper.toCliente(entidad));
+        Optional<ClienteEntidad> clienteEntidad = clienteDao.findByTipoIdAndNumeroId(tipoId, numeroId);
+        return clienteEntidad.map(entidad -> clienteMapper.toCliente(entidad));
 
     }
 
-    public Optional<Long> getIdCliente(String tipoId, String numeroId){
-       return clienteDao.findByTipoIdAndNumeroId(tipoId, numeroId).map(ClienteEntidad::getId);
+    public Optional<Long> getIdCliente(String tipoId, String numeroId) {
+        return clienteDao.findByTipoIdAndNumeroId(tipoId, numeroId).map(ClienteEntidad::getId);
     }
 
 }

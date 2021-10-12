@@ -20,5 +20,5 @@ public interface ClienteRespositorioInterfaz {
 
     Optional<Cliente> findByTipoIdAndNumeroId(String tipoId, String numeroId);
 
-     Optional<Long> getIdCliente(String tipoId, String numeroId);
+    Optional<Long> getIdCliente(String tipoId, String numeroId);
 }

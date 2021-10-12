@@ -19,7 +19,7 @@ public class FotoHystrixFallback implements FotoRest {
     @Override
     public ResponseEntity<Foto> obternerFotoPorIdCliente(Long IdCliente) {
         return new ResponseEntity<>(Foto.builder()
-                .foto("Foto no encotrodad.")
+                .foto("Foto no encotroda.")
                 .IdCliente(IdCliente)
                 .build(), HttpStatus.OK);
     }

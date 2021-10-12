@@ -27,7 +27,7 @@ public class ClienteServicio {
     FotoRest fotoRest; // cliente Feign
 
     public ClienteEntidad guadarCliente(Cliente cliente) {
-       ClienteEntidad clienteBd = clienteRespositorio.guardarCliente(cliente);
+        ClienteEntidad clienteBd = clienteRespositorio.guardarCliente(cliente);
         fotoRest.guardarFoto(Foto.builder()
                 .foto(cliente.getFoto())
                 .IdCliente(clienteBd.getId()).build());
@@ -51,13 +51,15 @@ public class ClienteServicio {
         fotoRest.EliminarFotoByIdCliente(idClient);
     }
 
-    public void actualizarCliente(Cliente cliente){
-        Long idClientEntidad = clienteServicioUtils.getIdClienteEntidad(cliente.getTipoId(), cliente.getNumeroId());
-        clienteRespositorio.actulizarCliente(cliente,idClientEntidad);
-        if(cliente.getFoto() != null) {
-           // fotoRest.guardarFoto(Foto.builder().foto(cliente.getFoto()).IdCliente(idClient).build());
+    public void actualizarCliente(String tipoId, String numeroId, Cliente cliente) {
+        Long idClientEntidad = clienteServicioUtils.getIdClienteEntidad(tipoId, numeroId);
+        clienteRespositorio.actulizarCliente(cliente, idClientEntidad);
+        if (cliente.getFoto() != null) {
+            fotoRest.guardarFoto(Foto.builder()
+                    .foto(cliente.getFoto())
+                    .IdCliente(idClientEntidad).build());
         }
-     }
+    }
 
     public List<Cliente> findByEdadGreaterThanEqual(int edad) {
         Optional<List<Cliente>> optionalList = clienteRespositorio.findByEdadGreaterThanEqual(edad);

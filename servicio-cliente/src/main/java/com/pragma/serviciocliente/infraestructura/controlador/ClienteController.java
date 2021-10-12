@@ -1,5 +1,6 @@
 package com.pragma.serviciocliente.infraestructura.controlador;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pragma.serviciocliente.dominio.Cliente;
 import com.pragma.serviciocliente.dominio.servicio.ClienteServicio;
@@ -36,12 +37,11 @@ public class ClienteController {
             @ApiResponse(code = 201, message = "Cliente guardado."),
             @ApiResponse(code = 400, message = "Cliente ya registrado."),
     })
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> guardarCliente(@RequestParam String  clienteJson, @RequestParam("fotoFile") MultipartFile fotoFile) throws IOException {
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> guardarCliente(@RequestParam String clienteJson, @RequestParam("fotoFile") MultipartFile fotoFile) throws IOException {
         Cliente cliente = new ObjectMapper().readValue(clienteJson, Cliente.class);
-        System.out.println(cliente);
         String fotoBase64 = Base64.getEncoder().encodeToString(fotoFile.getBytes());
-
+        cliente.setFoto(fotoBase64);
         if (clienteServicioUtils.existId(cliente.getTipoId(), cliente.getNumeroId())) {
             return new ResponseEntity<>(ResponseMessage.builder().code("400").response("Cliente ya registrado.").build(), HttpStatus.BAD_REQUEST);
         }
@@ -69,22 +69,27 @@ public class ClienteController {
             @ApiResponse(code = 200, message = "Cliente actualizado."),
             @ApiResponse(code = 400, message = "Cliente no encontrado."),
     })
-    @PutMapping("/id/{tipoId}/{numeroId}")
+    @PutMapping(value = "/id/{tipoId}/{numeroId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> actualizarCliente(@PathVariable String tipoId, @PathVariable String numeroId,
-                                               @ModelAttribute Cliente cliente, @RequestParam("fotoFile") MultipartFile fotoFile) {
+                                               @RequestParam String clienteJson, @RequestParam("fotoFile") MultipartFile fotoFile) throws JsonProcessingException {
         Cliente clienteBd = clienteServicio.findByTipoIdAndNumeroId(tipoId, numeroId);
         if (clienteBd != null) {
+            Cliente cliente = new ObjectMapper().readValue(clienteJson, Cliente.class);
+            System.out.println(cliente);
             try {
                 String fotoBase64 = Base64.getEncoder().encodeToString(fotoFile.getBytes());
+                System.out.println(fotoBase64);
                 cliente.setFoto(fotoBase64);
             } catch (IOException e) {
                 cliente.setFoto("Foto no disponible.");
             }
-            clienteServicio.actualizarCliente(cliente);
+
+            clienteServicio.actualizarCliente(tipoId, numeroId, cliente);
             return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(ResponseMessage.builder().code("404").response("Cliente no encontrado.").build(), HttpStatus.NOT_FOUND);
     }
+
 
     @ApiOperation("Listar todos los clientes registrados")
     @ApiResponses({
@@ -94,11 +99,12 @@ public class ClienteController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Cliente>> listarCliente() {
         List<Cliente> clientes = clienteServicio.listarClientes();
-        if(clientes.isEmpty()){
+        if (clientes.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(clientes, HttpStatus.FOUND);
     }
+
 
     @ApiOperation("Filtrar clientes por edad, mayor o igual")
     @ApiResponses({
@@ -106,19 +112,20 @@ public class ClienteController {
             @ApiResponse(code = 302, message = "Clientes encontrados."),
             @ApiResponse(code = 404, message = "Clientes no encontrados."),
     })
-    @GetMapping(value = "/edad/{edadString}",produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/edad/{edadString}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<List<Cliente>> filtroEdad(@PathVariable String edadString) {
         if (NumberUtils.isDigits(edadString)) {
             int edad = Integer.parseInt(edadString);
             List<Cliente> clientes = clienteServicio.findByEdadGreaterThanEqual(edad);
             if (clientes.isEmpty()) {
-                return new ResponseEntity<>(clientes,HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(clientes, HttpStatus.NOT_FOUND);
             }
             return new ResponseEntity<>(clientes, HttpStatus.FOUND);
         }
         return new ResponseEntity(ResponseMessage.builder().code("400").response("Edad no válida.").build(), HttpStatus.BAD_REQUEST);
     }
+
 
     @ApiOperation("Filtrar cliente por tipo y número de identidad")
     @ApiResponses({
