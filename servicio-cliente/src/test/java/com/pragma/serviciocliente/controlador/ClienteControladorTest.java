@@ -9,7 +9,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.RequestPostProcessor;
 
 import java.nio.charset.StandardCharsets;
 
@@ -29,7 +31,6 @@ public class ClienteControladorTest {
     ObjectMapper objectMapper;
 
     static Cliente cliente;
-
 
     @BeforeAll
     static void setUp() {
@@ -74,15 +75,27 @@ public class ClienteControladorTest {
                 .andExpect(jsonPath("$.nombres").value(cliente.getNombres()));
     }
 
+
     @Test
     @Order(5)
+    void actualizarCliente() throws Exception {
+        RequestPostProcessor putRequest = (MockHttpServletRequest request) -> { request.setMethod("PUT"); return request; };
+        mvc.perform(multipart("/cliente/id/" + cliente.getTipoId() + "/" + cliente.getNumeroId() + "")
+                        .file("fotoFile", "foto".getBytes(StandardCharsets.UTF_8))
+                        .param("clienteJson", objectMapper.writeValueAsString(cliente))
+                        .with(putRequest))
+                .andExpect(status().is(HttpStatus.OK.value()));
+    }
+
+    @Test
+    @Order(6)
     void eliminarCliente() throws Exception {
         mvc.perform(delete("/cliente/id/" + cliente.getTipoId() + "/" + cliente.getNumeroId() + ""))
                 .andExpect(status().is(HttpStatus.OK.value()));
     }
 
     @Test
-    @Order(6)
+    @Order(7)
     void filtroIdThrows404() throws Exception {
         mvc.perform(get("/cliente/id/" + cliente.getTipoId() + "/" + cliente.getNumeroId() + "")
                         .accept(MediaType.APPLICATION_JSON))
@@ -90,11 +103,12 @@ public class ClienteControladorTest {
     }
 
     @Test
-    @Order(7)
+    @Order(8)
     void filtroEdadThrows404() throws Exception {
         mvc.perform(get("/cliente/edad/" + cliente.getEdad() + "")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(HttpStatus.NOT_FOUND.value()));
     }
+
 
 }
