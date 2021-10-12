@@ -26,11 +26,12 @@ public class ClienteServicio {
     @Autowired
     FotoRest fotoRest; // cliente Feign
 
-    public void guadarCliente(Cliente cliente) {
+    public ClienteEntidad guadarCliente(Cliente cliente) {
        ClienteEntidad clienteBd = clienteRespositorio.guardarCliente(cliente);
         fotoRest.guardarFoto(Foto.builder()
                 .foto(cliente.getFoto())
                 .IdCliente(clienteBd.getId()).build());
+        return clienteBd;
     }
 
     public List<Cliente> listarClientes() {
