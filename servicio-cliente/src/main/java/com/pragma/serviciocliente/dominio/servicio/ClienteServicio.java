@@ -82,4 +82,5 @@ public class ClienteServicio {
         clienteBd.setFoto(clienteServicioUtils.getFoto(clienteBd).getFoto());
         return clienteBd;
     }
+
 }

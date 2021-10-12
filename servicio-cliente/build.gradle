@@ -52,6 +52,15 @@ dependencies {
 	implementation 'org.apache.commons:commons-lang3:3.12.0'
 
 	implementation 'mysql:mysql-connector-java:8.0.22'
+
+
+	implementation 'io.springfox:springfox-boot-starter:3.0.0'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
+	testImplementation 'com.h2database:h2:1.4.200'
+	implementation 'com.github.javafaker:javafaker:1.0.2'
+
 }
 dependencyManagement {
 	imports {
