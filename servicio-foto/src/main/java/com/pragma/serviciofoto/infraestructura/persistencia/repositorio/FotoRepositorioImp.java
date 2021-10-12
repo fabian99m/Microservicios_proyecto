@@ -4,8 +4,10 @@ package com.pragma.serviciofoto.infraestructura.persistencia.repositorio;
 import com.pragma.serviciofoto.dominio.Foto;
 import com.pragma.serviciofoto.dominio.repositorio.FotoRespositorioInterfaz;
 import com.pragma.serviciofoto.infraestructura.persistencia.DAO.FotoDaoInterfaz;
+import com.pragma.serviciofoto.infraestructura.persistencia.entidad.FotoEntidad;
 import com.pragma.serviciofoto.infraestructura.persistencia.mapper.FotoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.Id;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -27,6 +29,13 @@ public class FotoRepositorioImp implements FotoRespositorioInterfaz {
     @Override
     public void deleteFotoByIdCliente(Long id) {
         fotoDao.deleteFotoByIdCliente(id);
+    }
+
+    @Override
+    public void actualizarFoto(Foto foto) {
+        FotoEntidad fotoEntidad = fotoDao.findByIdCliente(foto.getIdCliente()).get();
+        fotoEntidad.setFoto(foto.getFoto());
+        fotoDao.save(fotoEntidad);
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.pragma.serviciocliente.dominio.Foto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Component
 public class FotoHystrixFallback implements FotoRest {
@@ -30,5 +31,10 @@ public class FotoHystrixFallback implements FotoRest {
                 .foto("No hay foto.")
                 .IdCliente(IdCliente)
                 .build(), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Foto> actualizarFoto(Foto foto) {
+        return null;
     }
 }

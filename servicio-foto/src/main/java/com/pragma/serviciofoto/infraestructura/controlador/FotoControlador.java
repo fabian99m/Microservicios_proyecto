@@ -37,5 +37,12 @@ public class FotoControlador {
 
     }
 
+    @PutMapping()
+    public ResponseEntity<Foto> actualizarFoto(@RequestBody Foto foto){
+        fotoServicio.actualizarFoto(foto);
+        return new ResponseEntity<>(HttpStatus.OK);
+
+    }
+
 
 }

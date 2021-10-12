@@ -23,4 +23,8 @@ public class FotoServicio {
         return fotoRepositorio.findByIdCliente(idClient).orElse(null);
     }
 
+    public void actualizarFoto(Foto foto){
+        fotoRepositorio.actualizarFoto(foto);
+    }
+
 }

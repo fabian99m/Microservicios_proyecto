@@ -10,11 +10,14 @@ import org.springframework.web.bind.annotation.*;
 public interface FotoRest {
 
     @PostMapping("/foto")
-    public ResponseEntity<Foto> guardarFoto(@RequestBody Foto foto);
+    ResponseEntity<Foto> guardarFoto(@RequestBody Foto foto);
 
     @GetMapping("/foto/{IdCliente}")
-    public ResponseEntity<Foto> obternerFotoPorIdCliente(@PathVariable Long IdCliente);
+    ResponseEntity<Foto> obternerFotoPorIdCliente(@PathVariable Long IdCliente);
 
     @DeleteMapping("/foto/{IdCliente}")
-    public ResponseEntity<Foto> EliminarFotoByIdCliente(@PathVariable Long IdCliente);
+    ResponseEntity<Foto> EliminarFotoByIdCliente(@PathVariable Long IdCliente);
+
+    @PutMapping("/foto/")
+    ResponseEntity<Foto> actualizarFoto(@RequestBody Foto foto);
 }

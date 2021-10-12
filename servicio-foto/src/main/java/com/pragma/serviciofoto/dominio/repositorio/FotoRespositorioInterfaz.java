@@ -11,6 +11,8 @@ public interface FotoRespositorioInterfaz {
 
     void deleteFotoByIdCliente(Long id);
 
+    void actualizarFoto(Foto foto);
+
      Optional<Foto> findByIdCliente(Long id);
 
 }

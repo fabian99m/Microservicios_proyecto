@@ -55,7 +55,7 @@ public class ClienteServicio {
         Long idClientEntidad = clienteServicioUtils.getIdClienteEntidad(tipoId, numeroId);
         clienteRespositorio.actulizarCliente(cliente, idClientEntidad);
         if (cliente.getFoto() != null) {
-            fotoRest.guardarFoto(Foto.builder()
+            fotoRest.actualizarFoto(Foto.builder()
                     .foto(cliente.getFoto())
                     .IdCliente(idClientEntidad).build());
         }
