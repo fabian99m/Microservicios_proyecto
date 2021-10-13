@@ -102,13 +102,4 @@ public class ClienteControladorTest {
                 .andExpect(status().is(HttpStatus.NOT_FOUND.value()));
     }
 
-    @Test
-    @Order(8)
-    void filtroEdadThrows404() throws Exception {
-        mvc.perform(get("/cliente/edad/" + cliente.getEdad() + "")
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(HttpStatus.NOT_FOUND.value()));
-    }
-
-
 }

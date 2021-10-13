@@ -32,12 +32,10 @@ public class ClienteRepositorioImp implements ClienteRespositorioInterfaz {
     }
 
     @Override
-    public void actulizarCliente(Cliente cliente, Long IdClienteEntidad) {
+    public ClienteEntidad actulizarCliente(Cliente cliente, Long IdClienteEntidad) {
         ClienteEntidad clienteEntidad = clienteMapper.toClienteEntidad(cliente);
         clienteEntidad.setId(IdClienteEntidad);
-        clienteDao.save(clienteEntidad);
-        // ClienteEntidad clienteEntidad = clienteMapper.toClienteEntidad(cliente);
-        //clienteDao.   (clienteEntidad);
+        return clienteDao.save(clienteEntidad);
     }
 
     @Override

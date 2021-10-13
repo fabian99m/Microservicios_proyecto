@@ -12,7 +12,7 @@ public interface ClienteRespositorioInterfaz {
 
     void eliminarCliente(Long IdCliente);
 
-    void actulizarCliente(Cliente cliente, Long IdClienteEntidad);
+    ClienteEntidad actulizarCliente(Cliente cliente, Long IdClienteEntidad);
 
     List<Cliente> listarClientes();
 

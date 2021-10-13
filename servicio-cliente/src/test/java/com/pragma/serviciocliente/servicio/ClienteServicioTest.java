@@ -84,11 +84,11 @@ public class ClienteServicioTest {
     @Test
     @Order(5)
     void actualizarCliente() {
-        clienteServicio.actualizarCliente(cliente.getTipoId(), cliente.getNumeroId(), clienteUpdate);
-        Cliente clienteUpdated = clienteServicio.findByTipoIdAndNumeroId(clienteUpdate.getTipoId(), clienteUpdate.getNumeroId());
+        ClienteEntidad clienteUpdated = clienteServicio.actualizarCliente(cliente.getTipoId(), cliente.getNumeroId(), clienteUpdate);
         assertNotNull(clienteUpdated);
-        assertEquals(clienteUpdated, clienteUpdate);
-
+        assertEquals(clienteUpdated.getNombres(), clienteUpdate.getNombres());
+        assertEquals(clienteUpdated.getNumeroId(), clienteUpdate.getNumeroId());
+        assertEquals(clienteUpdated.getTipoId(), clienteUpdate.getTipoId());
     }
 
     @Test

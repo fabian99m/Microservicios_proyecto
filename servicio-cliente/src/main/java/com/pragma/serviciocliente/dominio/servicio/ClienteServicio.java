@@ -51,14 +51,14 @@ public class ClienteServicio {
         fotoRest.EliminarFotoByIdCliente(idClient);
     }
 
-    public void actualizarCliente(String tipoId, String numeroId, Cliente cliente) {
+    public ClienteEntidad actualizarCliente(String tipoId, String numeroId, Cliente cliente) {
         Long idClientEntidad = clienteServicioUtils.getIdClienteEntidad(tipoId, numeroId);
-        clienteRespositorio.actulizarCliente(cliente, idClientEntidad);
         if (cliente.getFoto() != null) {
             fotoRest.actualizarFoto(Foto.builder()
                     .foto(cliente.getFoto())
                     .IdCliente(idClientEntidad).build());
         }
+        return clienteRespositorio.actulizarCliente(cliente, idClientEntidad);
     }
 
     public List<Cliente> findByEdadGreaterThanEqual(int edad) {

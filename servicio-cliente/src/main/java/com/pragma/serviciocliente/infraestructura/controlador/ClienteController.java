@@ -114,7 +114,7 @@ public class ClienteController {
     })
     @GetMapping(value = "/edad/{edadString}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<List<Cliente>> filtroEdad(@PathVariable String edadString) {
+    public ResponseEntity<?> filtroEdad(@PathVariable String edadString) {
         if (NumberUtils.isDigits(edadString)) {
             int edad = Integer.parseInt(edadString);
             List<Cliente> clientes = clienteServicio.findByEdadGreaterThanEqual(edad);
@@ -123,7 +123,7 @@ public class ClienteController {
             }
             return new ResponseEntity<>(clientes, HttpStatus.FOUND);
         }
-        return new ResponseEntity(ResponseMessage.builder().code("400").response("Edad no válida.").build(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(ResponseMessage.builder().code("400").response("Edad no válida.").build(), HttpStatus.BAD_REQUEST);
     }
 
 
